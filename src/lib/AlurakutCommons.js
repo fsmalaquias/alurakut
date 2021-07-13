@@ -27,7 +27,7 @@ export function AlurakutMenu({ githubUser }) {
         <AlurakutMenu.Logo src={`${BASE_URL}/logo.svg`} />
 
         <nav style={{ flex: 1 }}>
-          {[{ name: 'Inicio', slug: '/'}, {name: 'Amigos', slug: '/amigos'}, {name: 'Comunidades', slug: '/comunidades'}].map((menuItem) => (
+          {[{ name: 'Inicio', slug: '/'}, {name: 'Brothers', slug: '/amigos'}, {name: 'Galera', slug: '/comunidades'}].map((menuItem) => (
             <Link key={`key__${menuItem.name.toLocaleLowerCase()}`} href={`${menuItem.slug.toLocaleLowerCase()}`}>
               {menuItem.name}
             </Link>
@@ -39,7 +39,7 @@ export function AlurakutMenu({ githubUser }) {
             Sair
           </a>
           <div>
-            <input placeholder="Pesquisar no Orkut" />
+            <input placeholder="Pesquisar no Alurakut" />
           </div>
         </nav>
 

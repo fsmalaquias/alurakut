@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import Box from '../Box';
 
 export const ProfileRelationsBoxWrapper = styled(Box)`
+  background-color: rgba(255,255,255,0.5);
+  backdrop-filter: blur(6px);
+  
   ul {
     display: grid;
     grid-gap: 8px;

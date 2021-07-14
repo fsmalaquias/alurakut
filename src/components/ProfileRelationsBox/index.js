@@ -14,14 +14,18 @@ const ListItem = ({item}) => {
 
 export default function ProfileRelationsBox (props) {
   console.log('ProfileRelationsBox.props:', props);
+  let list = props.relationList;
+  if(props.showRecentFirst){
+    list = list.reverse();
+  }
   return(
     <ProfileRelationsBoxWrapper>
       <h2 className="smallTitle">
-        {props.title} ({props.relationList.length})
+        {props.title} ({list.length})
       </h2>
 
       <ul>
-        {props.relationList.slice(0,props.maxItensToShow).map((itemAtual) => {
+        {list.slice(0,props.maxItensToShow).map((itemAtual) => {
           return <ListItem item={itemAtual} key={itemAtual.id} />;
         })}
       </ul>

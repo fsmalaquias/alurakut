@@ -89,8 +89,8 @@ export default function Home() {
           </Box>
         </div>
         <div style={{gridArea: 'profileRelationsArea'}}>
-          <ProfileRelationsBox title="Comunidades" relationList={comunidades} maxItensToShow={3} />
-          <ProfileRelationsBox title="Pessoas da Comunidade" relationList={PESSOASFAVORITAS} maxItensToShow={6} />
+          <ProfileRelationsBox title="Comunidades" relationList={comunidades} showRecentFirst={true} maxItensToShow={3} />
+          <ProfileRelationsBox title="Pessoas da Comunidade" relationList={PESSOASFAVORITAS} showRecentFirst={false} maxItensToShow={6} />
         </div>
       </MainGrid>
     </>

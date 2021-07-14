@@ -15,7 +15,8 @@ const GlobalStyle = createGlobalStyle`
     font-family: sans-serif;
     background-color: #D9E6F6;
     background-image: url(https://images5.alphacoders.com/745/745809.jpg);
-    background-size: cover
+    background-size: cover;
+    background-position: center;
   }
 
   #__next {

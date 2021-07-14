@@ -6,14 +6,14 @@ const ListItem = ({item}) => {
     <li>
       <a href={item.link} target="_blank">
         <img src={item.image} />
-        <span>{item.title}</span>
+        <span>{item.name}</span>
       </a>
     </li>
   )
 }
 
 export default function ProfileRelationsBox (props) {
-  console.log('ProfileRelationsBox.props:', props);
+  // console.log('ProfileRelationsBox.props:', props);
   let list = props.relationList;
   if(props.showRecentFirst){
     list = list.reverse();

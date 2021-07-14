@@ -1,41 +1,35 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { COMUNIDADES, PESSOASFAVORITAS } from '../mock';
 import Box from '../src/components/Box';
 import MainGrid from '../src/components/MainGrid';
-import { ProfileRelationsBoxWrapper, Profile } from '../src/components/ProfileRelations';
 import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons';
 import ProfileRelationsBox from '../src/components/ProfileRelationsBox';
-
-const ProfileSidebar = (props) => {
-  console.log(props);
-  return (
-    <Box as="aside">
-      <img src={`http://github.com/${props.githubUser}.png`} style={{borderRadius: '8px'}} />
-      <hr />
-
-      <p>
-        <a className="boxLink" href={`http://github.com/${props.githubUser}`}>
-          @{props.githubUser}
-        </a>
-      </p>
-      <hr />
-
-      <AlurakutProfileSidebarMenuDefault githubUser={props.githubUser} />
-    </Box>
-  )
-}
+import ProfileSidebar from '../src/components/ProfileSidebar';
+import { api } from '../src/services';
 
 export default function Home() {
   const usuarioAleatorio = 'fsmalaquias';
-  const [comunidades, setComunidades] = useState(COMUNIDADES);
-  
+  const [comunidades, setComunidades] = useState([]);
+  const [following, setFollowing] = useState([]);
+  const [followers, setFollowers] = useState([]);
+
+  useEffect(async () => {
+    const resComunidades = await api.getComunidades();
+    setComunidades(resComunidades.data.allComunidades);
+
+    const resFollowing = await api.getFollowings();
+    setFollowing(resFollowing.data.allFollowings);
+
+    const resFollowers = await api.getFollowers();
+    setFollowers(resFollowers.data.allFollowers);
+  }, [])
 
   const handleCriarComunidade = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const comunidade = {
       id: new Date().toISOString(),
-      title: formData.get('title'),
+      name: formData.get('name'),
       image: formData.get('image'),
       link: formData.get('link'),
     }
@@ -44,6 +38,8 @@ export default function Home() {
 
     e.target.reset();
   }
+
+  
 
   return (
     <>
@@ -63,7 +59,7 @@ export default function Home() {
               <div>
                 <input
                   type="text"
-                  name="title"
+                  name="name"
                   placeholder="Qual vai ser o nome da sua comunidade?"
                   aria-label="Qual vai ser o nome da sua comunidade?"
                   />
@@ -89,7 +85,9 @@ export default function Home() {
           </Box>
         </div>
         <div style={{gridArea: 'profileRelationsArea'}}>
-          <ProfileRelationsBox title="Comunidades" relationList={comunidades} showRecentFirst={true} maxItensToShow={3} />
+          <ProfileRelationsBox title="Seguindo" relationList={following} showRecentFirst={true} maxItensToShow={6} />
+          <ProfileRelationsBox title="Seguidores" relationList={followers} showRecentFirst={true} maxItensToShow={6} />
+          <ProfileRelationsBox title="Comunidades" relationList={comunidades} showRecentFirst={true} maxItensToShow={6} />
           <ProfileRelationsBox title="Pessoas da Comunidade" relationList={PESSOASFAVORITAS} showRecentFirst={false} maxItensToShow={6} />
         </div>
       </MainGrid>

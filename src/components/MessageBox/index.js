@@ -11,7 +11,7 @@ const MessageItem = ({recado}) => {
 
 export default function MessageBox(props){
   return (
-    props.recados.slice(0,props.maxItensToShow).reverse().map(recadoAtual => {
+    props.recados.slice(0,props.maxItensToShow).map(recadoAtual => {
       return <MessageItem recado={recadoAtual} key={recadoAtual.id}/>
     })
   )

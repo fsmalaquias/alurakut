@@ -4,7 +4,7 @@ function generateUniqueId(){
 export const COMUNIDADES = [
   {
     id: generateUniqueId(),
-    title: 'Alurakut',
+    name: 'Alurakut',
     image: 'https://source.unsplash.com/300x300',
     link: 'https://www.alura.com.br/dev-em-t'
   }
@@ -13,43 +13,43 @@ export const COMUNIDADES = [
 export const PESSOASFAVORITAS = [
   {
     id: generateUniqueId(),
-    title: 'juunegreiros',
+    name: 'juunegreiros',
     image: 'https://github.com/juunegreiros.png',
     link: 'https://github.com/juunegreiros'
   },
   {
     id: generateUniqueId(),
-    title: 'omariosouto',
+    name: 'omariosouto',
     image: 'https://github.com/omariosouto.png',
     link: 'https://github.com/omariosouto'
   },
   {
     id: generateUniqueId(),
-    title: 'peas',
+    name: 'peas',
     image: 'https://github.com/peas.png',
     link: 'https://github.com/peas'
   },
   {
     id: generateUniqueId(),
-    title: 'rafaballerini',
+    name: 'rafaballerini',
     image: 'https://github.com/rafaballerini.png',
     link: 'https://github.com/rafaballerini'
   },
   {
     id: generateUniqueId(),
-    title: 'marcobrunodev',
+    name: 'marcobrunodev',
     image: 'https://github.com/marcobrunodev.png',
     link: 'https://github.com/marcobrunodev'
   },
   {
     id: generateUniqueId(),
-    title: 'felipefialho',
+    name: 'felipefialho',
     image: 'https://github.com/felipefialho.png',
     link: 'https://github.com/felipefialho'
   },
   {
     id: generateUniqueId(),
-    title: 'fzanfolim',
+    name: 'fzanfolim',
     image: 'https://github.com/fzanfolim.png',
     link: 'https://github.com/fzanfolim'
   },

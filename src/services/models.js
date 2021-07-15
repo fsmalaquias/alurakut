@@ -1,6 +1,12 @@
 export class Comunidade{
-  itemType = '966844';
+  itemType = '';
   name = '';
   image = '';
   link = '';
+}
+
+export class Recado{
+  itemType = '';
+  from = '';
+  message = '';
 }

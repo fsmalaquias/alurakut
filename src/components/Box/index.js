@@ -58,6 +58,26 @@ const Box = styled.div`
     border-radius: 10000px;
     background-color: #353535;
   }
+
+  textarea {
+    font-family: sans-serif;
+    padding: 15px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+
+    ::placeholder{
+      color: #353535;
+    }
+
+    .recado{
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      padding: 15px;
+      font-size: 14px;
+    }
+
+  }
 `
 
 export default Box;

@@ -3,6 +3,7 @@ const API_TOKEN = '5c20909d4aa00febcba58882c39933';
 
 const DATO_HEADERS = {
   'Content-Type' : 'application/json',
+  'Accept' : 'application/json',
   'Authorization' : `Bearer ${API_TOKEN}`
 }
 
@@ -15,13 +16,75 @@ async function queryRequest(query){
 }
 
 export const api = {
-  getComunidades: async () => {
-    return await queryRequest(`{allComunidades{id, name, image, link}}`);
+  comunidades: {
+    create: async (comunidade) => {
+      return fetch('/api/comunidades', {
+        method: 'POST',
+        headers: DATO_HEADERS,
+        body: JSON.stringify({comunidade})
+      }).then(res => res.json());
+    },
+    get: async () => {
+      const lista = await queryRequest(`query {
+        allComunidades{
+          id, 
+          name, 
+          image, 
+          link
+        }
+      }`);
+
+      return lista.data.allComunidades;
+    },
   },
-  getFollowings: async () => {
-    return await queryRequest(`{allFollowings{id, name, image, link}}`);
+  followings: {
+    get: async () => {
+      const lista = await queryRequest(`query {
+        allFollowings{
+          id, 
+          name, 
+          image, 
+          link
+        }
+      }`);
+
+      return lista.data.allFollowings;
+    }
   },
-  getFollowers: async () => {
-    return await queryRequest(`{allFollowers{id, name, image, link}}`);
+  followers: {
+    get: async () => {
+      const lista = await queryRequest(`query {
+        allFollowers{
+          id, 
+          name, 
+          image, 
+          link
+        }
+      }`);
+
+      return lista.data.allFollowers;
+    },
+  },
+  recados: {
+    create: async (recado) => {
+      return fetch('/api/recados', {
+        method: 'POST',
+        headers: DATO_HEADERS,
+        body: JSON.stringify({recado})
+      }).then(res => res.json());
+    },
+  
+    get: async () => {
+      const lista = await queryRequest(`query {
+        allRecados{
+          id, 
+          from, 
+          message
+        }
+      }`);
+  
+      return lista.data.allRecados;
+    }
   }
+  
 }

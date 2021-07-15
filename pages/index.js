@@ -6,35 +6,59 @@ import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet 
 import ProfileRelationsBox from '../src/components/ProfileRelationsBox';
 import ProfileSidebar from '../src/components/ProfileSidebar';
 import { api } from '../src/services';
+import MessageBox from '../src/components/MessageBox';
 
 export default function Home() {
   const usuarioAleatorio = 'fsmalaquias';
   const [comunidades, setComunidades] = useState([]);
   const [following, setFollowing] = useState([]);
   const [followers, setFollowers] = useState([]);
+  const [recados, setRecados] = useState([]);
+  const [sendingRecado, setSendingRecado] = useState(false);
+  const [sendingComunidade, setSendingComunidade] = useState(false);
 
   useEffect(async () => {
-    const resComunidades = await api.getComunidades();
-    setComunidades(resComunidades.data.allComunidades);
+    const resComunidades = await api.comunidades.get();
+    setComunidades(resComunidades);
 
-    const resFollowing = await api.getFollowings();
-    setFollowing(resFollowing.data.allFollowings);
+    const resFollowing = await api.followings.get();
+    setFollowing(resFollowing);
 
-    const resFollowers = await api.getFollowers();
-    setFollowers(resFollowers.data.allFollowers);
-  }, [])
+    const resFollowers = await api.followers.get();
+    setFollowers(resFollowers);
 
-  const handleCriarComunidade = (e) => {
+    const resRecados = await api.recados.get();
+    setRecados(resRecados);
+
+  }, []);
+
+  const handleCriarComunidade = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const comunidade = {
-      id: new Date().toISOString(),
       name: formData.get('name'),
       image: formData.get('image'),
       link: formData.get('link'),
     }
-    setComunidades([...comunidades, comunidade]);
-    console.log(comunidades);
+
+    const comunidadeCreated = await api.comunidades.create(comunidade);
+    setComunidades([...comunidades, comunidadeCreated]);
+    console.log(comunidadeCreated);
+
+    e.target.reset();
+  }
+
+  const handleEnviarRecado = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const recado = {
+      from: formData.get('from'),
+      message: formData.get('message')
+    }
+
+    const recadoCreated = await api.recados.create(recado);
+    setRecados([...recados, recadoCreated]);
+    console.log(recadoCreated);
 
     e.target.reset();
   }
@@ -80,8 +104,27 @@ export default function Home() {
                   aria-label="Coloque o link da comunidade"
                   />
               </div>
-              <button>Criar comunidade</button>
+              <button disabled={sendingComunidade}>Criar comunidade</button>
             </form>
+          </Box>
+
+          <Box>
+            <div>
+              <h2 className="subTitle">Deixar um recado</h2>
+              <form onSubmit={handleEnviarRecado}>
+                <input type="text" name="from" placeholder="Seu nome" />
+                <textarea rows="3" name="message" placeholder="Deixe aqui o seu recado" aria-label="Deixe aqui o seu recado">
+
+                </textarea>
+                <button aria-label="enviar recado" disabled={sendingRecado}>Enviar recado</button>
+              </form>
+              <br/>
+            </div>
+            <div>
+              <h2 className="subTitle">Recados</h2>
+              <MessageBox recados={recados} />  
+            </div>
+            
           </Box>
         </div>
         <div style={{gridArea: 'profileRelationsArea'}}>

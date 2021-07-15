@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { COMUNIDADES, PESSOASFAVORITAS } from '../mock';
 import Box from '../src/components/Box';
 import MainGrid from '../src/components/MainGrid';
-import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons';
+import { AlurakutMenu, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons';
 import ProfileRelationsBox from '../src/components/ProfileRelationsBox';
 import ProfileSidebar from '../src/components/ProfileSidebar';
 import { api } from '../src/services';
@@ -75,7 +75,7 @@ export default function Home() {
         <div className="welcomeArea" style={{gridArea: 'welcomeArea'}}>
           <Box>
             <h1 className="title">Bem-vindo</h1>
-            <OrkutNostalgicIconSet />
+            <OrkutNostalgicIconSet recados={recados.length} />
           </Box>
           <Box>
             <h2 className="subTitle">O que você deseja fazer</h2>
@@ -121,8 +121,8 @@ export default function Home() {
               <br/>
             </div>
             <div>
-              <h2 className="subTitle">Recados</h2>
-              <MessageBox recados={recados} />  
+              <h2 className="subTitle">Recados Recentes</h2>
+              <MessageBox recados={recados} maxItensToShow={4}/>  
             </div>
             
           </Box>

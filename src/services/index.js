@@ -79,7 +79,8 @@ export const api = {
         allRecados{
           id, 
           from, 
-          message
+          message,
+          createdAt
         }
       }`);
   

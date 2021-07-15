@@ -1,19 +1,17 @@
 import Message from "../Message";
 
 const MessageItem = ({recado}) => {
-  console.log(recado);
   return (
     <Message>
-      <h4 className="from">{recado.from}</h4>
+      <h4 className="from">De: {recado.from}</h4>
       <div className="message">{recado.message}</div>
     </Message>
   )
 }
 
-export default function MessageBox({recados}){
-  console.log(recados);
+export default function MessageBox(props){
   return (
-    recados.map(recadoAtual => {
+    props.recados.slice(0,props.maxItensToShow).reverse().map(recadoAtual => {
       return <MessageItem recado={recadoAtual} key={recadoAtual.id}/>
     })
   )

@@ -327,12 +327,12 @@ const AlurakutLoginScreen = css`
   :root {
     --backgroundPrimary: #D9E6F6;
     --backgroundSecondary: #F1F9FE;
-    --backgroundTertiary: #FFFFFF;
+    --backgroundTertiary: rgba(255,255,255,.8);
     --backgroundQuarternary: #BBCDE8;
     --colorPrimary: #202020;
     --colorSecondary: #388BB0;
     --colorTertiary: #2F4A71;
-    --colorQuarternary: #D81D99;
+    --colorQuarternary: #353535;
     --textPrimaryColor: #333333;
     --textSecondaryColor: #FFFFFF;
     --textTertiaryColor: #5A5A5A;
@@ -362,6 +362,7 @@ const AlurakutLoginScreen = css`
     .logoArea {
       grid-area: logoArea;
       background-color: var(--backgroundTertiary);
+      backdrop-filter: blur(6px);
       border-radius: var(--commonRadius);
       padding: var(--gutter);
       text-align: center;
@@ -403,7 +404,8 @@ const AlurakutLoginScreen = css`
         padding: var(--gutter);
         padding-left: 50px;
         padding-right: 50px;
-        background-color: var(--backgroundSecondary);
+        background-color: var(--backgroundTertiary);
+        backdrop-filter: blur(6px);
         border-radius: var(--commonRadius);
         flex: 1;
         &:not(:last-child) {
@@ -445,7 +447,8 @@ const AlurakutLoginScreen = css`
     }
     .footerArea {
       grid-area: footerArea;
-      background-color: var(--backgroundQuarternary);
+      background-color: var(--backgroundTertiary);
+      backdrop-filter: blur(6px);
       border-radius: var(--commonRadius);
       padding: 8px;
       p {

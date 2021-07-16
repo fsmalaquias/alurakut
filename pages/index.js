@@ -141,7 +141,7 @@ export default function Home() {
           <ProfileRelationsBox title="Seguindo" relationList={following} showRecentFirst={true} maxItensToShow={6} />
           <ProfileRelationsBox title="Seguidores" relationList={followers} showRecentFirst={true} maxItensToShow={6} />
           <ProfileRelationsBox title="Comunidades" relationList={comunidades} showRecentFirst={true} maxItensToShow={6} />
-          <ProfileRelationsBox title="Pessoas da Comunidade" relationList={PESSOASFAVORITAS} showRecentFirst={false} maxItensToShow={6} />
+          {/* <ProfileRelationsBox title="Pessoas da Comunidade" relationList={PESSOASFAVORITAS} showRecentFirst={false} maxItensToShow={6} /> */}
         </div>
       </MainGrid>
     </>

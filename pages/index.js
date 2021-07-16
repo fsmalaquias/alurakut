@@ -41,11 +41,16 @@ export default function Home() {
       link: formData.get('link'),
     }
 
-    const comunidadeCreated = await api.comunidades.create(comunidade);
-    setComunidades([...comunidades, comunidadeCreated]);
-    console.log(comunidadeCreated);
+    if(comunidade.name.trim() !== '' &&
+        comunidade.image.trim() !== '' &&
+        comunidade.link.trim() !== ''){
 
-    e.target.reset();
+      const comunidadeCreated = await api.comunidades.create(comunidade);
+      setComunidades([...comunidades, comunidadeCreated]);
+      console.log(comunidadeCreated);
+
+      e.target.reset();
+    }
   }
 
   const handleEnviarRecado = async (e) => {
@@ -56,11 +61,16 @@ export default function Home() {
       message: formData.get('message')
     }
 
-    const recadoCreated = await api.recados.create(recado);
-    setRecados([...recados, recadoCreated]);
-    console.log(recadoCreated);
+    if(recado.from.trim() !== '' &&
+        recado.message.trim() !== ''){
+      api.recados.create(recado).then((recadoCreated) => {
+        setRecados([...recados, recadoCreated]);
+        console.log(recadoCreated);
 
-    e.target.reset();
+        e.target.reset();
+      });
+    }
+    
   }
 
   

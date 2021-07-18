@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 // Hook do NextJS
 import { useRouter } from 'next/router';
 import nookies from 'nookies';
@@ -6,27 +6,48 @@ const LOGIN_URL = 'https://alurakut.vercel.app/api/login';
 
 export default function LoginScreen() {
   const router = useRouter();
-  const [githubUser, setGithubUser] = React.useState('');
+  const [githubUser, setGithubUser] = React.useState('fsmalaquias');
 
-  const handleLogin = (submitEvent) => {
+  const checkGithubUser = async (githubUser) => {
+    const userChecked = await fetch(`https://api.github.com/users/${githubUser}`)
+      .then(res => {
+        return res.ok;
+      });
+
+      console.log('checkGithubUser', userChecked);
+
+      return userChecked;
+
+  }
+
+  const handleLogin = async (submitEvent) => {
     submitEvent.preventDefault();
-    console.log('LoginScreen: githubUser', githubUser)
-    fetch(LOGIN_URL, {
+    console.log('LoginScreen: githubUser', githubUser);
+
+    const userExists = await checkGithubUser(githubUser);
+    if(!userExists){
+      alert('Usuário não encontrado no Github');
+    }
+    else{
+      fetch(LOGIN_URL, {
         method: 'POST',
         headers: {
            'Content-Type': 'application/json'  
         },
         body: JSON.stringify({ githubUser: githubUser })
-    })
-    .then(async (res) => {
-        const resposta = await res.json();
-        const token = resposta.token;
-        nookies.set(null, 'USER_TOKEN', token, {
-            path: '/',
-            maxAge: 86400 * 7 
-        })
-        router.push('/')
-    })
+      })
+      .then(async (res) => {
+          const resposta = await res.json();
+          const token = resposta.token;
+          console.log('LoginScreen: token', token);
+          nookies.set(null, 'USER_TOKEN', token, {
+              path: '/',
+              maxAge: 86400 * 7 
+          })
+          router.push('/')
+      })
+    }
+    
 }
 
   return (
@@ -52,7 +73,7 @@ export default function LoginScreen() {
                     setGithubUser(event.target.value)
                 }}
             />
-            {githubUser.length === 0 ? 'Preencha o campo' : ''}
+            {githubUser.length === 0 ? 'Preencha o campo<br/>' : ''}<br/>
             <button type="submit">
               Login
             </button>

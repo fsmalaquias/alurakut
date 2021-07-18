@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import { COMUNIDADES, PESSOASFAVORITAS } from '../mock';
+import nookies from 'nookies';
+import jwt from 'jsonwebtoken';
+// import { COMUNIDADES, PESSOASFAVORITAS } from '../mock';
 import Box from '../src/components/Box';
 import MainGrid from '../src/components/MainGrid';
 import { AlurakutMenu, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons';
@@ -8,8 +10,8 @@ import ProfileSidebar from '../src/components/ProfileSidebar';
 import { api } from '../src/services';
 import MessageBox from '../src/components/MessageBox';
 
-export default function Home() {
-  const usuarioAleatorio = 'fsmalaquias';
+export default function Home(props) {
+  const usuarioAleatorio = props.githubUser;
   const [comunidades, setComunidades] = useState([]);
   const [following, setFollowing] = useState([]);
   const [followers, setFollowers] = useState([]);
@@ -17,7 +19,7 @@ export default function Home() {
   const [sendingRecado, setSendingRecado] = useState(false);
   const [sendingComunidade, setSendingComunidade] = useState(false);
 
-  useEffect(async () => {
+  useEffect(async () => {    
     const resComunidades = await api.comunidades.get();
     setComunidades(resComunidades);
 
@@ -70,10 +72,7 @@ export default function Home() {
         e.target.reset();
       });
     }
-    
   }
-
-  
 
   return (
     <>
@@ -146,4 +145,45 @@ export default function Home() {
       </MainGrid>
     </>
   )
+}
+
+
+export async function getServerSideProps(context) {
+  const cookies = nookies.get(context);
+  const token = cookies.USER_TOKEN;
+  if(token){
+    
+    const {githubUser} = jwt.decode(token);
+
+    const {isAuthenticated } = await fetch('https://alurakut.vercel.app/api/auth',{
+      headers: {
+        Authorization: token
+      }
+    }).then(async res => {
+      return res.json();
+    });
+
+    if(!isAuthenticated) {
+      return {
+        redirect: {
+          destination: '/login',
+          permanent: false,
+        }
+      }
+    }
+
+    console.log('isAuthenticated', isAuthenticated);
+    return {
+      props: {
+        githubUser
+      }, // will be passed to the page component as props
+    }
+  } else {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      }
+    }
+  }
 }
